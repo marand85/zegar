@@ -8,6 +8,7 @@ Global $DaysOfWeek_WinWidth[8] = ["None", "250", "187", "177", "212", "180", "19
 ;MsgBox(1, "", $DaysOfWeek[_DateToDayOfWeekISO(@YEAR,@MON,@MDAY)])
 
 Global $Day_of_the_week_number = _DateToDayOfWeekISO(@YEAR,@MON,@MDAY); numer dnia tygodnia
+Global $memoDay_of_the_week_number;
 Global $Win_Width = $DaysOfWeek_WinWidth[$Day_of_the_week_number];
 Global $Win_Height = 25;
 Global $Scr_Width = 1920;1080;
@@ -46,8 +47,26 @@ Func Example()
         $idMsg = GUIGetMsg()
 		; Get current system time
 		$tCur = _Date_Time_GetLocalTime()
+
+		; Jeśli zmienił się dzień tygodnia w trakcie działania programu to trzeba zmienić rozmiar okna i rozmiar etykiety
+		$memoDay_of_the_week_number = $Day_of_the_week_number;
 		$Day_of_the_week_number = _DateToDayOfWeekISO(@YEAR,@MON,@MDAY); numer dnia tygodnia
-		; tutaj dodać zmianę rozmiaru okna i etykiety
+		If ($Day_of_the_week_number<>$memoDay_of_the_week_number) Then
+		   ;Zmiana rozmiaru okna zmienia także pozycję jego środka
+		   ;Sprawdzam czy okno znajduje się aktualnie przy krawędzi ekranu
+		   $WinPos = WinGetPos($hwndGUI)
+		   If ($WinPos[0]=$Scr_Width-$Win_Width) Then
+			  ; Okno znajduje się przy krawędzi
+			  $Win_Width = $DaysOfWeek_WinWidth[$Day_of_the_week_number];
+			  WinMove($hwndGUI, "", $Scr_Width-$Win_Width, $Scr_Height-$Win_Height, $Win_Width, $Win_Height);
+		   Else
+			  ; Okno znajduje się na środku
+			  $Win_Width = $DaysOfWeek_WinWidth[$Day_of_the_week_number];
+			  WinMove($hwndGUI, "", $Scr_Width/2-$Win_Width/2, $Scr_Height-$Win_Height, $Win_Width, $Win_Height);
+		   EndIf
+		   GUICtrlSetPos($Label, 5, 0, $Win_Width-5, Default);
+		EndIf
+
 	    GUICtrlSetData($Label, $DaysOfWeek[$Day_of_the_week_number]&", "&_Date_Time_SystemTimeToTimeStr($tCur))
 		$MousePos = MouseGetPos()
 		$WinPos = WinGetPos($hwndGUI)
