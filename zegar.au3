@@ -13,7 +13,13 @@ Global $Win_Width = $DaysOfWeek_WinWidth[$Day_of_the_week_number];
 Global $Win_Height = 25;
 Global $Scr_Width = 1920;1080;
 Global $Scr_Height = 1080;1920;
-Global $Scr_Orientation = "Horizontal"; "Vertical"
+Global $Scr_Orientation; = "Horizontal"; "Vertical"
+
+$Scr_Orientation = InputBox("Orientacja ekranu", "Podaj orientację (puste Vertical): ", "Horizontal","",  200, 130)
+
+If $Scr_Orientation <> "Horizontal" Then
+   $Scr_Orientation = "Vertical"
+EndIf
 
 If $Scr_Orientation ="Horizontal" Then
    $Scr_Width = 1920;1080;
