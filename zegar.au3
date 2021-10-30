@@ -7,7 +7,7 @@
 ; Długość okna dopasowana do dni tygodnia w języku polskim
 ;Global $DaysOfWeek_WinWidth[8] = ["None", "250", "187", "177", "212", "180", "190", "212"]
 ; Długość okna dopasowana do dni tygodnia w języku angielskim
-Global $DaysOfWeek_WinWidth[8] = ["None", "200", "205", "243", "215", "180", "211", "197"]
+Global $DaysOfWeek_WinWidth[8] = ["None", "210", "215", "253", "225", "190", "221", "207"]
 ;MsgBox(1, "", $DaysOfWeek[_DateToDayOfWeekISO(@YEAR,@MON,@MDAY)])
 
 Global $Day_of_the_week_number = _DateToDayOfWeekISO(@YEAR,@MON,@MDAY); numer dnia tygodnia
@@ -77,7 +77,28 @@ Func Example()
 		   GUICtrlSetPos($Label, 5, 0, $Win_Width-5, Default);
 		EndIf
 
-	    GUICtrlSetData($Label, $DaysOfWeek[$Day_of_the_week_number]&", "&_Date_Time_SystemTimeToTimeStr($tCur))
+		$time = _Date_Time_SystemTimeToTimeStr($tCur)
+		$tab = StringRegExp($time, "([0-9]{2}):([0-9]{2}):[0-9]{2}", 1)
+	    $hour = $tab[0]
+	    $mins = $tab[1]
+		Local $time
+
+	    If $hour = "00" Then
+		   $hour = "12"
+		   $time = $hour&":"&$mins&" AM"
+	    ElseIf $hour > "00" And $hour < "12" Then
+		   $time = $hour&":"&$mins&" AM"
+	    ElseIf $hour = 12 Then
+		   $time = $hour&":"&$mins&" PM"
+	    ElseIf $hour >= 13 Then
+		   $hour = $hour - 12
+		   If $hour >= 1 And $hour < 10 Then
+			  $hour = "0"&$hour
+		   EndIf
+		   $time = $hour&":"&$mins&" PM"
+	    EndIf
+
+	    GUICtrlSetData($Label, $DaysOfWeek[$Day_of_the_week_number]&", "&$time)
 		$MousePos = MouseGetPos()
 		$WinPos = WinGetPos($hwndGUI)
 	    If ($MousePos[0]>=$WinPos[0] And $MousePos[0]<=($WinPos[0]+$Win_Width) And _ ; '_' kontynuuje linię kodu w nowym wierszu
@@ -92,7 +113,7 @@ Func Example()
 		   WinMove($hwndGUI,"", $Scr_Width/2-$Win_Width/2, $Scr_Height-$Win_Height)
 		   ;$flaga = 0
 	    EndIf
-		Sleep(200)
+		Sleep(500)
         If $idMsg = $GUI_EVENT_CLOSE Then ExitLoop
 		;Sleep(50)
     WEnd
