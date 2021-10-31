@@ -4,7 +4,10 @@
 
 ; szerokość okna i labela zmienia się w zależności od dnia tygodnia, nazwy dni tygodnia mają różną długość
 ; wartości dobrane są poprzez eksperymentalne sprawdzenie odpowiedniej szerokości
-Global $DaysOfWeek_WinWidth[8] = ["None", "250", "187", "177", "212", "180", "190", "212"]
+; Długość okna dopasowana do dni tygodnia w języku polskim
+;Global $DaysOfWeek_WinWidth[8] = ["None", "250", "187", "177", "212", "180", "190", "212"]
+; Długość okna dopasowana do dni tygodnia w języku angielskim
+Global $DaysOfWeek_WinWidth[8] = ["None", "200", "205", "243", "215", "180", "211", "197"]
 ;MsgBox(1, "", $DaysOfWeek[_DateToDayOfWeekISO(@YEAR,@MON,@MDAY)])
 
 Global $Day_of_the_week_number = _DateToDayOfWeekISO(@YEAR,@MON,@MDAY); numer dnia tygodnia
@@ -30,7 +33,8 @@ ElseIf $Scr_Orientation = "Vertical" Then
 EndIf
 
 ; wyświetla nazwę dnia tygodnia po polsku
-Global $DaysOfWeek[8] = ["None", "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela"]
+;Global $DaysOfWeek[8] = ["None", "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela"]
+Global $DaysOfWeek[8] = ["None", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 Example()
 
