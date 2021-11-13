@@ -18,7 +18,8 @@ Global $Scr_Width = 1920;1080;
 Global $Scr_Height = 1080;1920;
 Global $Scr_Orientation; = "Horizontal"; "Vertical"
 
-$Scr_Orientation = InputBox("Orientacja ekranu", "Podaj orientację (puste Vertical): ", "Horizontal","",  200, 130)
+$Scr_Orientation = InputBox("Screen orientation", "Enter the screen orientation: (Cancel or other than Horizontal means Vertical): ", _
+							  "Horizontal","",  200, 155)
 
 If $Scr_Orientation <> "Horizontal" Then
    $Scr_Orientation = "Vertical"
